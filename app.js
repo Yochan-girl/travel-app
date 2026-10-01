@@ -1,3 +1,12 @@
+const SUPABASE_URL = 'https://bekopbgpjvhjwjgntldb.supabase.co';
+
+const SUPABASE_KEY = 'sb_publishable_vikI_atnygiPs9Yvoqs_ug_NHX2XEzb';
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
 const map = L.map('map').setView([20, 0], 2);
 
 L.tileLayer(
