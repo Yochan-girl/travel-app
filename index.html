@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Travel Map</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>My Travel Map</h1>
+
+    <h2>訪問した国</h2>
+
+    <div id="map"></div>
+
+    <h2>旅行の記録</h2>
+
+    <p>訪問日1</p>
+    <input type="date">
+
+    <p>訪問日2</p>
+    <input type="date">
+
+    <p>訪問日3</p>
+    <input type="date">
+
+    <p>訪問日4</p>
+    <input type="date">
+
+    <p>訪問日5</p>
+    <input type="date">
+
+    <h3>食事の特徴</h3>
+
+    <textarea
+      maxlength="300">
+    </textarea>
+
+    <h3>思い出</h3>
+
+    <textarea
+      maxlength="300">
+    </textarea>
+
+    <h3>メモ</h3>
+
+    <textarea
+      maxlength="300">
+    </textarea>
+
+    <button>
+      保存
+    </button>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
