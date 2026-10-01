@@ -26,10 +26,6 @@ body {
 }
 
 
-/* =========================
-   全体レイアウト
-========================= */
-
 .container {
   width: 100%;
   max-width: 880px;
@@ -38,7 +34,7 @@ body {
 
 
 /* =========================
-   ページタイトル
+   タイトル
 ========================= */
 
 .page-header {
@@ -54,16 +50,15 @@ h1 {
 
   font-size: 32px;
   font-weight: 700;
-
-  letter-spacing: 0.02em;
 }
 
 
 /* =========================
-   セクションカード
+   カード
 ========================= */
 
-.section-card {
+.section-card,
+.login-card {
   margin-bottom: 24px;
   padding: 30px;
 
@@ -79,7 +74,7 @@ h1 {
 
 
 /* =========================
-   大見出し
+   見出し
 ========================= */
 
 h2 {
@@ -99,10 +94,6 @@ h2 {
   border-bottom: 2px solid #dcebe6;
 }
 
-
-/* =========================
-   小見出し
-========================= */
 
 h3 {
   display: flex;
@@ -129,15 +120,71 @@ h3 i,
   margin-right: 7px;
 }
 
-h2 i {
-  font-size: 20px;
+
+/* =========================
+   ログイン
+========================= */
+
+.login-card {
+  padding: 22px 30px;
 }
 
-h3 i {
+.login-title {
+  margin-bottom: 10px;
+
+  border-bottom: none;
+}
+
+.login-description {
+  margin-top: 0;
+
+  color: #687570;
+
+  font-size: 13px;
+}
+
+
+#loginEmail,
+#loginPassword {
+  width: 100%;
+  height: 46px;
+
+  margin-top: 10px;
+  padding: 0 13px;
+
+  border: 1px solid #d7dfdc;
+  border-radius: 10px;
+
+  font-family: inherit;
   font-size: 15px;
 }
 
-.field p i {
+
+#loginButton {
+  margin-top: 14px;
+}
+
+
+.logged-in-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #245f51;
+
+  font-weight: 600;
+}
+
+
+#logoutButton {
+  width: auto;
+
+  margin: 0;
+
+  padding: 8px 16px;
+
+  background-color: #687570;
+
   font-size: 13px;
 }
 
@@ -159,13 +206,9 @@ h3 i {
   color: #2f6f5f;
 }
 
-#selected-country i {
-  color: #2f7d6d;
-}
-
 
 /* =========================
-   世界地図
+   地図
 ========================= */
 
 #map {
@@ -180,8 +223,7 @@ h3 i {
 
 
 /* =========================
-   Visit Date / Visit City
-   全体配置
+   Visit
 ========================= */
 
 .date-grid {
@@ -193,19 +235,6 @@ h3 i {
   gap: 20px 24px;
 }
 
-
-/* =========================
-   1回分の旅行セット
-========================= */
-
-.visit-set {
-  padding: 0;
-}
-
-
-/* =========================
-   Date / City ラベル
-========================= */
 
 .field p {
   display: flex;
@@ -221,20 +250,19 @@ h3 i {
 }
 
 
-/* Visit Cityの上に少し余白 */
-
 .city-label {
   margin-top: 14px !important;
 }
 
 
 /* =========================
-   Visit Date / Visit City
    入力欄
 ========================= */
 
 input[type="date"],
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   width: 100%;
   height: 48px;
 
@@ -249,57 +277,20 @@ input[type="text"] {
 
   font-family: inherit;
   font-size: 15px;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 
-/* =========================
-   placeholder
-========================= */
-
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
   color: #99a5a1;
 }
 
 
-/* =========================
-   入力欄をクリックした時
-========================= */
-
-input[type="date"]:focus,
-input[type="text"]:focus,
-textarea:focus {
-  outline: none;
-
-  border-color: #3d796a;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(61, 121, 106, 0.12);
-}
-
-
-/* =========================
-   マウスを乗せた時
-========================= */
-
-input[type="date"]:hover,
-input[type="text"]:hover,
-textarea:hover {
-  border-color: #aabbb5;
-}
-
-
-/* =========================
-   テキスト入力エリア
-========================= */
-
 .text-field {
   margin-top: 24px;
 }
+
 
 textarea {
   width: 100%;
@@ -320,15 +311,53 @@ textarea {
   line-height: 1.7;
 
   resize: vertical;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 
 /* =========================
-   保存ボタン
+   focus
+========================= */
+
+input:focus,
+textarea:focus {
+  outline: none;
+
+  border-color: #3d796a;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(61, 121, 106, 0.12);
+}
+
+
+/* =========================
+   閲覧モード
+========================= */
+
+.edit-field:disabled {
+  background-color: #f7f8f8;
+
+  color: #4f5d59;
+
+  cursor: default;
+
+  opacity: 1;
+}
+
+
+.view-only-message {
+  margin-top: 22px;
+
+  text-align: center;
+
+  color: #87918e;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   ボタン
 ========================= */
 
 button {
@@ -350,34 +379,25 @@ button {
   font-weight: 700;
 
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-#saveButton i {
-  margin-right: 6px;
-}
 
 button:hover {
   background-color: #1c4e43;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 6px 16px
-    rgba(36, 95, 81, 0.18);
-}
-
-button:active {
-  transform: translateY(0);
 }
 
 
 /* =========================
-   スマホ対応
+   表示 / 非表示
+========================= */
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================
+   スマホ
 ========================= */
 
 @media (max-width: 640px) {
@@ -390,7 +410,8 @@ button:active {
     font-size: 26px;
   }
 
-  .section-card {
+  .section-card,
+  .login-card {
     padding: 22px 18px;
 
     border-radius: 14px;
@@ -406,8 +427,7 @@ button:active {
     height: 320px;
   }
 
-  input[type="date"],
-  input[type="text"],
+  input,
   textarea,
   button {
     font-size: 16px;
