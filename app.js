@@ -29,7 +29,7 @@ fetch('countries.geo.json')
 
           const countryName = feature.properties.name;
 
-          alert(countryName);
+          document.getElementById('selected-country').textContent = countryName;
 
         });
 

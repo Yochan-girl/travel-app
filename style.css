@@ -1,100 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+
+
+/* ==============================
+   全体
+============================== */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  padding: 36px 16px;
+
+  font-family: "Noto Sans JP", sans-serif;
+
+  color: #344441;
+
+  /* 旅行ノートっぽい柔らかい背景 */
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(229, 239, 232, 0.9) 0%,
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #f8f6f0 0%,
+      #eef4f1 100%
+    );
+
+  line-height: 1.7;
 }
+
+
+/* ==============================
+   メインの白いカード
+============================== */
 
 .container {
   width: 90%;
-  max-width: 700px;
+  max-width: 760px;
+
   margin: 30px auto;
-  background-color: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(47, 111, 95, 0.08);
+  border-radius: 24px;
+
+  box-shadow:
+    0 18px 45px rgba(47, 80, 68, 0.08),
+    0 3px 12px rgba(47, 80, 68, 0.05);
 }
+
+
+/* ==============================
+   タイトル
+============================== */
 
 h1 {
+  margin-top: 0;
+  margin-bottom: 32px;
+
   text-align: center;
-  color: #2f6f5f;
-  margin-bottom: 30px;
+
+  color: #256a59;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
 }
+
+
+/* ==============================
+   大見出し
+============================== */
 
 h2 {
-  margin-top: 30px;
-  color: #2f6f5f;
+  position: relative;
+
+  margin-top: 42px;
+  margin-bottom: 22px;
+
+  padding-left: 16px;
+
+  color: #256a59;
+
+  font-size: 23px;
+  font-weight: 700;
+
+  letter-spacing: 0.03em;
 }
+
+
+/* 見出し左のアクセント */
+h2::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 6px;
+
+  width: 4px;
+  height: 24px;
+
+  border-radius: 10px;
+
+  background-color: #d6a36a;
+}
+
+
+/* ==============================
+   項目名
+============================== */
 
 h3 {
-  margin-top: 24px;
-  margin-bottom: 8px;
-}
+  margin-top: 26px;
+  margin-bottom: 10px;
 
-input[type="date"] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  color: #344441;
+
   font-size: 16px;
+  font-weight: 600;
 }
 
-textarea {
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 100px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  resize: vertical;
-}
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 24px;
-  border: none;
-  border-radius: 10px;
-  background-color: #2f6f5f;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
+/* ==============================
+   世界地図
+============================== */
 
-button:hover {
-  opacity: 0.9;
-}
-
-/* 世界地図 */
 #map {
   width: 100%;
   height: 450px;
-  border-radius: 12px;
-  margin-bottom: 30px;
+
+  margin-bottom: 34px;
+
+  overflow: hidden;
+
+  border: 1px solid #d9e4df;
+  border-radius: 20px;
+
+  box-shadow:
+    0 6px 20px rgba(47, 80, 68, 0.06);
 }
 
-/* スマホ用 */
+
+/* ==============================
+   日付入力
+============================== */
+
+input[type="date"] {
+  width: 100%;
+
+  height: 54px;
+
+  margin-bottom: 16px;
+  padding: 0 16px;
+
+  border: 1px solid #d8dfdc;
+  border-radius: 14px;
+
+  background-color: #fcfcfa;
+
+  color: #344441;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  transition: all 0.25s ease;
+}
+
+
+/* カーソルを乗せたとき */
+input[type="date"]:hover {
+  border-color: #9dbbb2;
+}
+
+
+/* 入力中 */
+input[type="date"]:focus {
+  outline: none;
+
+  border-color: #347c69;
+
+  background-color: #ffffff;
+
+  box-shadow:
+    0 0 0 4px rgba(52, 124, 105, 0.10);
+}
+
+
+/* ==============================
+   テキスト入力欄
+============================== */
+
+textarea {
+  width: 100%;
+
+  min-height: 120px;
+
+  padding: 16px 18px;
+
+  border: 1px solid #d8dfdc;
+  border-radius: 14px;
+
+  background-color: #fcfcfa;
+
+  color: #344441;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  line-height: 1.7;
+
+  resize: vertical;
+
+  transition: all 0.25s ease;
+}
+
+
+/* テキスト欄 hover */
+textarea:hover {
+  border-color: #9dbbb2;
+}
+
+
+/* テキスト欄 入力中 */
+textarea:focus {
+  outline: none;
+
+  border-color: #347c69;
+
+  background-color: #ffffff;
+
+  box-shadow:
+    0 0 0 4px rgba(52, 124, 105, 0.10);
+}
+
+
+/* ==============================
+   保存ボタン
+============================== */
+
+button {
+  width: 100%;
+
+  margin-top: 30px;
+  padding: 16px 20px;
+
+  border: none;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #347c69,
+      #236352
+    );
+
+  color: white;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+
+  letter-spacing: 0.05em;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(35, 99, 82, 0.18);
+
+  transition: all 0.25s ease;
+}
+
+
+/* 保存ボタン hover */
+button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 26px rgba(35, 99, 82, 0.24);
+}
+
+
+/* クリックしたとき */
+button:active {
+  transform: translateY(0);
+}
+
+
+/* ==============================
+   スマホ対応
+============================== */
+
 @media (max-width: 600px) {
+
+  body {
+    padding: 14px;
+  }
+
+
   .container {
     width: auto;
-    margin: 12px;
-    padding: 16px;
+
+    margin: 12px auto;
+    padding: 22px 18px;
+
+    border-radius: 18px;
   }
+
 
   h1 {
-    font-size: 26px;
+    font-size: 25px;
   }
 
+
   h2 {
+    margin-top: 34px;
+
     font-size: 20px;
   }
 
-  h3 {
-    font-size: 17px;
+
+  h2::before {
+    top: 5px;
+
+    height: 21px;
   }
+
+
+  h3 {
+    font-size: 16px;
+  }
+
+
+  #map {
+    height: 330px;
+
+    border-radius: 16px;
+  }
+
+
+  input[type="date"] {
+    height: 52px;
+  }
+
 
   input[type="date"],
   textarea,
@@ -102,7 +357,8 @@ button:hover {
     font-size: 16px;
   }
 
-  #map {
-    height: 350px;
+
+  textarea {
+    min-height: 110px;
   }
 }
