@@ -51,6 +51,19 @@ const editFields =
 
 
 // ========================================
+// 管理者ページ判定
+// ========================================
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const isAdminPage =
+  urlParams.get('admin') === '1';
+
+
+// ========================================
 // 編集モード切り替え
 // ========================================
 
@@ -60,7 +73,10 @@ function setEditMode(isLoggedIn) {
     field.disabled = !isLoggedIn;
   });
 
+
   if (isLoggedIn) {
+
+    // ログイン中
 
     loginArea.classList.add('hidden');
 
@@ -72,13 +88,25 @@ function setEditMode(isLoggedIn) {
 
   } else {
 
-    loginArea.classList.remove('hidden');
+    // 未ログイン
 
     loggedInArea.classList.add('hidden');
 
     saveButton.classList.add('hidden');
 
     viewOnlyMessage.classList.remove('hidden');
+
+
+    // ?admin=1 のときだけログイン欄を表示
+    if (isAdminPage) {
+
+      loginArea.classList.remove('hidden');
+
+    } else {
+
+      loginArea.classList.add('hidden');
+
+    }
 
   }
 
@@ -315,7 +343,6 @@ async function loadVisitCounts() {
       dates.filter(date => date).length;
 
 
-    // country_codeでも検索できるようにする
     if (record.country_code) {
 
       visitCounts[
@@ -325,7 +352,6 @@ async function loadVisitCounts() {
     }
 
 
-    // 古いデータとの互換用
     if (record.country_name) {
 
       visitCounts[
@@ -458,8 +484,6 @@ async function loadCountryData(
   clearForm();
 
 
-  // まずcountry_codeで探す
-
   let {
     data,
     error
@@ -489,9 +513,6 @@ async function loadCountryData(
 
   }
 
-
-  // 過去に国名をcountry_codeとして
-  // 保存していた場合にも対応
 
   if (!data) {
 
@@ -527,8 +548,6 @@ async function loadCountryData(
   }
 
 
-  // データなしなら新しい国
-
   if (!data) {
 
     selectedCountryCode =
@@ -538,8 +557,6 @@ async function loadCountryData(
 
   }
 
-
-  // 既存データのコードをそのまま使う
 
   selectedCountryCode =
     data.country_code ||
@@ -595,17 +612,13 @@ async function loadCountryData(
 
 
 // ========================================
-// 世界の訪問回数を先に取得
+// 地図初期化
 // ========================================
 
 async function initializeMap() {
 
   await loadVisitCounts();
 
-
-  // ======================================
-  // 国境データ読み込み
-  // ======================================
 
   fetch('countries.geo.json')
 
@@ -619,10 +632,6 @@ async function initializeMap() {
       L.geoJSON(
         data,
         {
-
-          // ===============================
-          // 国の色
-          // ===============================
 
           style:
             function (feature) {
@@ -668,10 +677,6 @@ async function initializeMap() {
             },
 
 
-          // ===============================
-          // 国クリック
-          // ===============================
-
           onEachFeature:
             function (
               feature,
@@ -684,8 +689,6 @@ async function initializeMap() {
               const countryName =
                 getCountryName(feature);
 
-
-              // 後から色を更新するため保存
 
               countryLayers[
                 countryCode
@@ -736,8 +739,6 @@ async function initializeMap() {
 
       ).addTo(map);
 
-
-      // GeoJSON作成後にも色を更新
 
       updateMapColors();
 
@@ -926,10 +927,6 @@ saveButton
 
       }
 
-
-      // ===============================
-      // 保存した直後に色を更新
-      // ===============================
 
       await loadVisitCounts();
 
