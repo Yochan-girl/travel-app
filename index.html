@@ -28,51 +28,158 @@
 
 </head>
 
+
 <body>
 
   <div class="container">
 
-    <h1>Yochan Travel Map</h1>
 
-    <h2>Countries Visited</h2>
+    <!-- タイトル -->
+    <header class="page-header">
 
-    <div id="map"></div>
+      <h1>Yochan Travel Map</h1>
 
-    <h2>Travel Memories</h2>
+    </header>
 
-    <h3 id="selected-country">
-    Select a country on the map
-    </h3>
 
-    <p>Visit Date 1</p>
-    <input type="date" id="visitDate1">
+    <!-- 世界地図 -->
+    <section class="section-card">
 
-    <p>Visit Date 2</p>
-    <input type="date" id="visitDate2">
+      <h2>Countries Visited</h2>
 
-    <p>Visit Date 3</p>
-    <input type="date" id="visitDate3">
+      <div id="map"></div>
 
-    <p>Visit Date 4</p>
-    <input type="date" id="visitDate4">
+    </section>
 
-    <p>Visit Date 5</p>
-    <input type="date" id="visitDate5">
 
-    <h3>Food</h3>
-    <textarea id="food" maxlength="800"></textarea>
+    <!-- 旅行の記録 -->
+    <section class="section-card">
 
-    <h3>Memory</h3>
-    <textarea id="memory" maxlength="800"></textarea>
+      <h2>Travel Memories</h2>
 
-    <h3>Memo</h3>
-    <textarea id="memo" maxlength="800"></textarea>
 
-    <button id="saveButton">
-    保存
-    </button>
+      <h3 id="selected-country">
+        Select a country on the map
+      </h3>
+
+
+      <!-- 訪問日 -->
+      <div class="date-grid">
+
+
+        <div class="field">
+
+          <p>Visit Date 1</p>
+
+          <input
+            type="date"
+            id="visitDate1"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <p>Visit Date 2</p>
+
+          <input
+            type="date"
+            id="visitDate2"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <p>Visit Date 3</p>
+
+          <input
+            type="date"
+            id="visitDate3"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <p>Visit Date 4</p>
+
+          <input
+            type="date"
+            id="visitDate4"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <p>Visit Date 5</p>
+
+          <input
+            type="date"
+            id="visitDate5"
+          >
+
+        </div>
+
+
+      </div>
+
+
+      <!-- Food -->
+      <div class="text-field">
+
+        <h3>Food</h3>
+
+        <textarea
+          id="food"
+          maxlength="800"
+        ></textarea>
+
+      </div>
+
+
+      <!-- Memory -->
+      <div class="text-field">
+
+        <h3>Memory</h3>
+
+        <textarea
+          id="memory"
+          maxlength="800"
+        ></textarea>
+
+      </div>
+
+
+      <!-- Memo -->
+      <div class="text-field">
+
+        <h3>Memo</h3>
+
+        <textarea
+          id="memo"
+          maxlength="800"
+        ></textarea>
+
+      </div>
+
+
+      <!-- 保存ボタン -->
+      <button id="saveButton">
+        保存
+      </button>
+
+
+    </section>
+
 
   </div>
+
 
   <script src="app.js"></script>
 
