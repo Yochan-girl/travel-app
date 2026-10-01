@@ -45,19 +45,23 @@
   <div class="container">
 
 
-    <!-- タイトル -->
+    <!-- =========================
+         タイトル
+    ========================== -->
 
-   <header class="page-header">
+    <header class="page-header">
 
-  <h1>Yochan Travel Map</h1>
+      <h1>Yochan Travel Map</h1>
 
-  <p class="visited-profile">
-    Visited
-    <span id="country-count">0</span>
-    Countries
-  </p>
+      <p class="visited-profile">
+        Visited
+        <span id="country-count">0</span>
+        Countries
+      </p>
 
-　</header>
+    </header>
+
+
 
     <!-- =========================
          管理者ログイン
@@ -160,14 +164,13 @@
       </h3>
 
 
+
       <!-- =========================
            Visit Date / City
       ========================== -->
 
       <div class="date-grid">
 
-
-        <!-- Visit 1 -->
 
         <div class="field visit-set">
 
@@ -198,8 +201,6 @@
         </div>
 
 
-        <!-- Visit 2 -->
-
         <div class="field visit-set">
 
           <p>
@@ -228,8 +229,6 @@
 
         </div>
 
-
-        <!-- Visit 3 -->
 
         <div class="field visit-set">
 
@@ -260,8 +259,6 @@
         </div>
 
 
-        <!-- Visit 4 -->
-
         <div class="field visit-set">
 
           <p>
@@ -290,8 +287,6 @@
 
         </div>
 
-
-        <!-- Visit 5 -->
 
         <div class="field visit-set">
 
@@ -324,7 +319,10 @@
       </div>
 
 
-      <!-- Food -->
+
+      <!-- =========================
+           Food
+      ========================== -->
 
       <div class="text-field">
 
@@ -342,7 +340,10 @@
       </div>
 
 
-      <!-- Memory -->
+
+      <!-- =========================
+           Memory
+      ========================== -->
 
       <div class="text-field">
 
@@ -360,7 +361,115 @@
       </div>
 
 
-      <!-- Memo -->
+
+      <!-- =========================
+           Travel Photos
+      ========================== -->
+
+      <div class="photo-section">
+
+        <h3>
+          <i class="bi bi-camera"></i>
+          Travel Photos
+        </h3>
+
+        <p class="photo-help">
+          最大2枚まで登録できます
+        </p>
+
+
+        <div class="photo-grid">
+
+
+          <!-- Photo 1 -->
+
+          <div class="photo-card">
+
+            <div class="photo-frame">
+
+              <img
+                id="photoPreview1"
+                class="photo-preview hidden"
+                alt="Travel photo 1"
+              >
+
+              <div
+                id="photoPlaceholder1"
+                class="photo-placeholder"
+              >
+                <i class="bi bi-image"></i>
+                <span>Photo 1</span>
+              </div>
+
+            </div>
+
+            <label
+              for="photoInput1"
+              class="photo-select-button edit-only-photo"
+            >
+              <i class="bi bi-upload"></i>
+              写真1を選択
+            </label>
+
+            <input
+              type="file"
+              id="photoInput1"
+              class="photo-file-input edit-field"
+              accept="image/*"
+            >
+
+          </div>
+
+
+          <!-- Photo 2 -->
+
+          <div class="photo-card">
+
+            <div class="photo-frame">
+
+              <img
+                id="photoPreview2"
+                class="photo-preview hidden"
+                alt="Travel photo 2"
+              >
+
+              <div
+                id="photoPlaceholder2"
+                class="photo-placeholder"
+              >
+                <i class="bi bi-image"></i>
+                <span>Photo 2</span>
+              </div>
+
+            </div>
+
+            <label
+              for="photoInput2"
+              class="photo-select-button edit-only-photo"
+            >
+              <i class="bi bi-upload"></i>
+              写真2を選択
+            </label>
+
+            <input
+              type="file"
+              id="photoInput2"
+              class="photo-file-input edit-field"
+              accept="image/*"
+            >
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           Memo
+      ========================== -->
 
       <div class="text-field">
 
@@ -378,7 +487,10 @@
       </div>
 
 
-      <!-- 保存 -->
+
+      <!-- =========================
+           保存
+      ========================== -->
 
       <button
         id="saveButton"
