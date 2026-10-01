@@ -23,7 +23,7 @@ let selectedCountryName = null;
 
 
 // ========================================
-// 地図の国データ
+// 地図関連
 // ========================================
 
 let countryLayers = {};
@@ -52,6 +52,7 @@ const editFields =
 
 // ========================================
 // 管理者ページ判定
+// ?admin=1 の時だけログイン欄を表示
 // ========================================
 
 const urlParams =
@@ -76,8 +77,6 @@ function setEditMode(isLoggedIn) {
 
   if (isLoggedIn) {
 
-    // ログイン中
-
     loginArea.classList.add('hidden');
 
     loggedInArea.classList.remove('hidden');
@@ -88,8 +87,6 @@ function setEditMode(isLoggedIn) {
 
   } else {
 
-    // 未ログイン
-
     loggedInArea.classList.add('hidden');
 
     saveButton.classList.add('hidden');
@@ -97,7 +94,6 @@ function setEditMode(isLoggedIn) {
     viewOnlyMessage.classList.remove('hidden');
 
 
-    // ?admin=1 のときだけログイン欄を表示
     if (isAdminPage) {
 
       loginArea.classList.remove('hidden');
@@ -114,7 +110,7 @@ function setEditMode(isLoggedIn) {
 
 
 // ========================================
-// 最初にログイン状態を確認
+// ログイン状態確認
 // ========================================
 
 async function checkLogin() {
@@ -123,6 +119,7 @@ async function checkLogin() {
     data: { session }
   } =
     await supabaseClient.auth.getSession();
+
 
   setEditMode(!!session);
 
@@ -204,7 +201,25 @@ document
     'click',
     async function () {
 
-      await supabaseClient.auth.signOut();
+      const { error } =
+        await supabaseClient.auth
+          .signOut({
+            scope: 'local'
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          'ログアウトに失敗しました'
+        );
+
+        return;
+
+      }
+
 
       setEditMode(false);
 
@@ -256,7 +271,7 @@ function getCountryCode(feature) {
 
 
 // ========================================
-// 訪問回数による色
+// 訪問回数による地図の色
 // ========================================
 
 function getCountryColor(count) {
@@ -287,6 +302,69 @@ function getCountryColor(count) {
 
 
 // ========================================
+// 訪問国数を自動集計
+// ========================================
+
+async function loadCountryCount() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from('travel-app')
+      .select('country_code');
+
+
+  if (error) {
+
+    console.error(
+      '訪問国数取得エラー',
+      error
+    );
+
+    return;
+
+  }
+
+
+  const countries =
+    new Set();
+
+
+  data.forEach(record => {
+
+    if (
+      record.country_code &&
+      record.country_code.trim() !== ''
+    ) {
+
+      countries.add(
+        record.country_code
+      );
+
+    }
+
+  });
+
+
+  const countElement =
+    document.getElementById(
+      'country-count'
+    );
+
+
+  if (countElement) {
+
+    countElement.textContent =
+      countries.size;
+
+  }
+
+}
+
+
+// ========================================
 // Supabaseから訪問回数を取得
 // ========================================
 
@@ -297,9 +375,7 @@ async function loadVisitCounts() {
     error
   } =
     await supabaseClient
-
       .from('travel-app')
-
       .select(`
         country_code,
         country_name,
@@ -381,9 +457,17 @@ function updateMapColors() {
     const item =
       countryLayers[key];
 
+
     const count =
-      visitCounts[item.countryCode] ??
-      visitCounts[item.countryName] ??
+
+      visitCounts[
+        item.countryCode
+      ] ??
+
+      visitCounts[
+        item.countryName
+      ] ??
+
       0;
 
 
@@ -473,7 +557,7 @@ function clearForm() {
 
 
 // ========================================
-// 国の保存データを読み込む
+// 国ごとの保存データを読み込む
 // ========================================
 
 async function loadCountryData(
@@ -489,16 +573,12 @@ async function loadCountryData(
     error
   } =
     await supabaseClient
-
       .from('travel-app')
-
       .select('*')
-
       .eq(
         'country_code',
         detectedCountryCode
       )
-
       .maybeSingle();
 
 
@@ -514,20 +594,17 @@ async function loadCountryData(
   }
 
 
+  // 過去データとの互換用
   if (!data) {
 
     const result =
       await supabaseClient
-
         .from('travel-app')
-
         .select('*')
-
         .eq(
           'country_name',
           countryName
         )
-
         .maybeSingle();
 
 
@@ -548,6 +625,7 @@ async function loadCountryData(
   }
 
 
+  // 未登録の国
   if (!data) {
 
     selectedCountryCode =
@@ -633,6 +711,10 @@ async function initializeMap() {
         data,
         {
 
+          // ------------------------------
+          // 国の色
+          // ------------------------------
+
           style:
             function (feature) {
 
@@ -677,6 +759,10 @@ async function initializeMap() {
             },
 
 
+          // ------------------------------
+          // 国クリック
+          // ------------------------------
+
           onEachFeature:
             function (
               feature,
@@ -717,12 +803,18 @@ async function initializeMap() {
                     countryCode;
 
 
-                  document
-                    .getElementById(
+                  const nameElement =
+                    document.getElementById(
                       'selected-country-name'
-                    )
-                    .textContent =
+                    );
+
+
+                  if (nameElement) {
+
+                    nameElement.textContent =
                       countryName;
+
+                  }
 
 
                   await loadCountryData(
@@ -757,10 +849,12 @@ async function initializeMap() {
 
 
 // ========================================
-// 地図初期化
+// 初期処理
 // ========================================
 
 initializeMap();
+
+loadCountryCount();
 
 
 // ========================================
@@ -898,9 +992,7 @@ saveButton
 
       const { error } =
         await supabaseClient
-
           .from('travel-app')
-
           .upsert(
             record,
             {
@@ -928,7 +1020,12 @@ saveButton
       }
 
 
+      // 地図の色を更新
       await loadVisitCounts();
+
+
+      // 訪問国数も更新
+      await loadCountryCount();
 
 
       alert(
