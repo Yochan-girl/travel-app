@@ -27,12 +27,14 @@
   >
 
 
-  <!-- Leaflet -->
+  <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   >
 
+
+  <!-- Leaflet JavaScript -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
   </script>
@@ -65,20 +67,29 @@
 
     <!-- =========================
          管理者ログイン
+         通常URLでは最初から非表示
     ========================== -->
 
-    <section class="login-card">
+    <section
+      id="admin-panel"
+      class="login-card hidden"
+    >
 
       <div id="login-area">
 
         <h2 class="login-title">
+
           <i class="bi bi-lock"></i>
+
           Admin Login
+
         </h2>
+
 
         <p class="login-description">
           編集する場合のみログインしてください
         </p>
+
 
         <input
           type="email"
@@ -86,19 +97,27 @@
           placeholder="Email"
         >
 
+
         <input
           type="password"
           id="loginPassword"
           placeholder="Password"
         >
 
+
         <button id="loginButton">
+
           <i class="bi bi-box-arrow-in-right"></i>
+
           Login
+
         </button>
 
       </div>
 
+
+
+      <!-- ログイン後 -->
 
       <div
         id="logged-in-area"
@@ -108,9 +127,13 @@
         <div class="logged-in-message">
 
           <span>
+
             <i class="bi bi-unlock-fill"></i>
+
             編集モード
+
           </span>
+
 
           <button id="logoutButton">
             Logout
@@ -131,9 +154,13 @@
     <section class="section-card">
 
       <h2>
+
         <i class="bi bi-geo-alt-fill"></i>
+
         Countries Visited
+
       </h2>
+
 
       <div id="map"></div>
 
@@ -148,10 +175,16 @@
     <section class="section-card">
 
       <h2>
+
         <i class="bi bi-journal-text"></i>
+
         Travel Memories
+
       </h2>
 
+
+
+      <!-- 選択中の国 -->
 
       <h3 id="selected-country">
 
@@ -172,12 +205,18 @@
       <div class="date-grid">
 
 
+        <!-- Visit 1 -->
+
         <div class="field visit-set">
 
           <p>
+
             <i class="bi bi-calendar3"></i>
+
             Visit Date 1
+
           </p>
+
 
           <input
             type="date"
@@ -185,10 +224,15 @@
             class="edit-field"
           >
 
+
           <p class="city-label">
+
             <i class="bi bi-geo-alt"></i>
+
             Visit City 1
+
           </p>
+
 
           <input
             type="text"
@@ -201,12 +245,19 @@
         </div>
 
 
+
+        <!-- Visit 2 -->
+
         <div class="field visit-set">
 
           <p>
+
             <i class="bi bi-calendar3"></i>
+
             Visit Date 2
+
           </p>
+
 
           <input
             type="date"
@@ -214,10 +265,15 @@
             class="edit-field"
           >
 
+
           <p class="city-label">
+
             <i class="bi bi-geo-alt"></i>
+
             Visit City 2
+
           </p>
+
 
           <input
             type="text"
@@ -230,12 +286,19 @@
         </div>
 
 
+
+        <!-- Visit 3 -->
+
         <div class="field visit-set">
 
           <p>
+
             <i class="bi bi-calendar3"></i>
+
             Visit Date 3
+
           </p>
+
 
           <input
             type="date"
@@ -243,10 +306,15 @@
             class="edit-field"
           >
 
+
           <p class="city-label">
+
             <i class="bi bi-geo-alt"></i>
+
             Visit City 3
+
           </p>
+
 
           <input
             type="text"
@@ -259,12 +327,19 @@
         </div>
 
 
+
+        <!-- Visit 4 -->
+
         <div class="field visit-set">
 
           <p>
+
             <i class="bi bi-calendar3"></i>
+
             Visit Date 4
+
           </p>
+
 
           <input
             type="date"
@@ -272,10 +347,15 @@
             class="edit-field"
           >
 
+
           <p class="city-label">
+
             <i class="bi bi-geo-alt"></i>
+
             Visit City 4
+
           </p>
+
 
           <input
             type="text"
@@ -288,12 +368,19 @@
         </div>
 
 
+
+        <!-- Visit 5 -->
+
         <div class="field visit-set">
 
           <p>
+
             <i class="bi bi-calendar3"></i>
+
             Visit Date 5
+
           </p>
+
 
           <input
             type="date"
@@ -301,10 +388,15 @@
             class="edit-field"
           >
 
+
           <p class="city-label">
+
             <i class="bi bi-geo-alt"></i>
+
             Visit City 5
+
           </p>
+
 
           <input
             type="text"
@@ -327,9 +419,13 @@
       <div class="text-field">
 
         <h3>
+
           <i class="bi bi-fork-knife"></i>
+
           Food
+
         </h3>
+
 
         <textarea
           id="food"
@@ -348,9 +444,13 @@
       <div class="text-field">
 
         <h3>
+
           <i class="bi bi-image"></i>
+
           Memory
+
         </h3>
+
 
         <textarea
           id="memory"
@@ -369,9 +469,13 @@
       <div class="photo-section">
 
         <h3>
+
           <i class="bi bi-camera"></i>
+
           Travel Photos
+
         </h3>
+
 
         <p class="photo-help">
           最大2枚まで登録できます
@@ -385,6 +489,7 @@
 
           <div class="photo-card">
 
+
             <div class="photo-frame">
 
               <img
@@ -393,23 +498,34 @@
                 alt="Travel photo 1"
               >
 
+
               <div
                 id="photoPlaceholder1"
                 class="photo-placeholder"
               >
+
                 <i class="bi bi-image"></i>
-                <span>Photo 1</span>
+
+                <span>
+                  Photo 1
+                </span>
+
               </div>
 
             </div>
+
 
             <label
               for="photoInput1"
               class="photo-select-button edit-only-photo"
             >
+
               <i class="bi bi-upload"></i>
+
               写真1を選択
+
             </label>
+
 
             <input
               type="file"
@@ -421,9 +537,11 @@
           </div>
 
 
+
           <!-- Photo 2 -->
 
           <div class="photo-card">
+
 
             <div class="photo-frame">
 
@@ -433,23 +551,34 @@
                 alt="Travel photo 2"
               >
 
+
               <div
                 id="photoPlaceholder2"
                 class="photo-placeholder"
               >
+
                 <i class="bi bi-image"></i>
-                <span>Photo 2</span>
+
+                <span>
+                  Photo 2
+                </span>
+
               </div>
 
             </div>
+
 
             <label
               for="photoInput2"
               class="photo-select-button edit-only-photo"
             >
+
               <i class="bi bi-upload"></i>
+
               写真2を選択
+
             </label>
+
 
             <input
               type="file"
@@ -474,9 +603,13 @@
       <div class="text-field">
 
         <h3>
+
           <i class="bi bi-sticky"></i>
+
           Memo
+
         </h3>
+
 
         <textarea
           id="memo"
@@ -498,10 +631,14 @@
       >
 
         <i class="bi bi-floppy"></i>
+
         保存
 
       </button>
 
+
+
+      <!-- 閲覧モード -->
 
       <p
         id="view-only-message"
@@ -517,10 +654,22 @@
   </div>
 
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- 自分のJS -->
+  <!-- =========================
+       Supabase
+  ========================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+  </script>
+
+
+
+  <!-- =========================
+       自分のJavaScript
+       必ず一番最後
+  ========================== -->
+
   <script src="app.js"></script>
 
 
