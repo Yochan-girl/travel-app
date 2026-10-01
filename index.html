@@ -27,14 +27,12 @@
   >
 
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   >
 
-
-  <!-- Leaflet JavaScript -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
   </script>
@@ -47,15 +45,73 @@
   <div class="container">
 
 
-    <!-- =========================
-         タイトル
-    ========================== -->
+    <!-- タイトル -->
 
     <header class="page-header">
 
       <h1>Yochan Travel Map</h1>
 
     </header>
+
+
+    <!-- =========================
+         管理者ログイン
+    ========================== -->
+
+    <section class="login-card">
+
+      <div id="login-area">
+
+        <h2 class="login-title">
+          <i class="bi bi-lock"></i>
+          Admin Login
+        </h2>
+
+        <p class="login-description">
+          編集する場合のみログインしてください
+        </p>
+
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Email"
+        >
+
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+        >
+
+        <button id="loginButton">
+          <i class="bi bi-box-arrow-in-right"></i>
+          Login
+        </button>
+
+      </div>
+
+
+      <div
+        id="logged-in-area"
+        class="hidden"
+      >
+
+        <div class="logged-in-message">
+
+          <span>
+            <i class="bi bi-unlock-fill"></i>
+            編集モード
+          </span>
+
+          <button id="logoutButton">
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
 
 
 
@@ -88,24 +144,25 @@
       </h2>
 
 
-      <!-- 選択中の国 -->
-
       <h3 id="selected-country">
 
         <i class="bi bi-geo-alt-fill"></i>
 
-        Select a country on the map
+        <span id="selected-country-name">
+          Select a country on the map
+        </span>
 
       </h3>
 
 
-
       <!-- =========================
-           Visit 1
+           Visit Date / City
       ========================== -->
 
       <div class="date-grid">
 
+
+        <!-- Visit 1 -->
 
         <div class="field visit-set">
 
@@ -117,8 +174,8 @@
           <input
             type="date"
             id="visitDate1"
+            class="edit-field"
           >
-
 
           <p class="city-label">
             <i class="bi bi-geo-alt"></i>
@@ -128,6 +185,7 @@
           <input
             type="text"
             id="visitCity1"
+            class="edit-field"
             placeholder="例：Paris"
             maxlength="100"
           >
@@ -135,10 +193,7 @@
         </div>
 
 
-
-        <!-- =========================
-             Visit 2
-        ========================== -->
+        <!-- Visit 2 -->
 
         <div class="field visit-set">
 
@@ -150,8 +205,8 @@
           <input
             type="date"
             id="visitDate2"
+            class="edit-field"
           >
-
 
           <p class="city-label">
             <i class="bi bi-geo-alt"></i>
@@ -161,6 +216,7 @@
           <input
             type="text"
             id="visitCity2"
+            class="edit-field"
             placeholder="例：London"
             maxlength="100"
           >
@@ -168,10 +224,7 @@
         </div>
 
 
-
-        <!-- =========================
-             Visit 3
-        ========================== -->
+        <!-- Visit 3 -->
 
         <div class="field visit-set">
 
@@ -183,8 +236,8 @@
           <input
             type="date"
             id="visitDate3"
+            class="edit-field"
           >
-
 
           <p class="city-label">
             <i class="bi bi-geo-alt"></i>
@@ -194,6 +247,7 @@
           <input
             type="text"
             id="visitCity3"
+            class="edit-field"
             placeholder="例：Rome"
             maxlength="100"
           >
@@ -201,10 +255,7 @@
         </div>
 
 
-
-        <!-- =========================
-             Visit 4
-        ========================== -->
+        <!-- Visit 4 -->
 
         <div class="field visit-set">
 
@@ -216,8 +267,8 @@
           <input
             type="date"
             id="visitDate4"
+            class="edit-field"
           >
-
 
           <p class="city-label">
             <i class="bi bi-geo-alt"></i>
@@ -227,6 +278,7 @@
           <input
             type="text"
             id="visitCity4"
+            class="edit-field"
             placeholder="例：Seoul"
             maxlength="100"
           >
@@ -234,10 +286,7 @@
         </div>
 
 
-
-        <!-- =========================
-             Visit 5
-        ========================== -->
+        <!-- Visit 5 -->
 
         <div class="field visit-set">
 
@@ -249,8 +298,8 @@
           <input
             type="date"
             id="visitDate5"
+            class="edit-field"
           >
-
 
           <p class="city-label">
             <i class="bi bi-geo-alt"></i>
@@ -260,20 +309,17 @@
           <input
             type="text"
             id="visitCity5"
+            class="edit-field"
             placeholder="例：New York"
             maxlength="100"
           >
 
         </div>
 
-
       </div>
 
 
-
-      <!-- =========================
-           Food
-      ========================== -->
+      <!-- Food -->
 
       <div class="text-field">
 
@@ -284,16 +330,14 @@
 
         <textarea
           id="food"
+          class="edit-field"
           maxlength="300"
         ></textarea>
 
       </div>
 
 
-
-      <!-- =========================
-           Memory
-      ========================== -->
+      <!-- Memory -->
 
       <div class="text-field">
 
@@ -304,16 +348,14 @@
 
         <textarea
           id="memory"
+          class="edit-field"
           maxlength="300"
         ></textarea>
 
       </div>
 
 
-
-      <!-- =========================
-           Memo
-      ========================== -->
+      <!-- Memo -->
 
       <div class="text-field">
 
@@ -324,23 +366,32 @@
 
         <textarea
           id="memo"
+          class="edit-field"
           maxlength="300"
         ></textarea>
 
       </div>
 
 
+      <!-- 保存 -->
 
-      <!-- =========================
-           保存ボタン
-      ========================== -->
-
-      <button id="saveButton">
+      <button
+        id="saveButton"
+        class="hidden"
+      >
 
         <i class="bi bi-floppy"></i>
         保存
 
       </button>
+
+
+      <p
+        id="view-only-message"
+        class="view-only-message"
+      >
+        閲覧モード
+      </p>
 
 
     </section>
@@ -349,8 +400,10 @@
   </div>
 
 
-  <!-- 自分のJavaScript -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- 自分のJS -->
   <script src="app.js"></script>
 
 
