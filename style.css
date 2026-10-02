@@ -271,7 +271,7 @@ body {
   position: relative;
 
   width: 100%;
-  height: 480px;
+  height: 360px;
 
   overflow: hidden;
 
@@ -285,15 +285,12 @@ body {
 }
 
 
-/* Leafletの背景を少し柔らかく */
+/* Leaflet */
 
 .leaflet-container {
   font-family: inherit;
   background: #e9efec;
 }
-
-
-/* Leafletズームボタン */
 
 .leaflet-bar {
   overflow: hidden;
@@ -316,9 +313,6 @@ body {
   background: #f0f6f3 !important;
 }
 
-
-/* Leafletクレジット */
-
 .leaflet-control-attribution {
   color: #84908c;
 
@@ -329,7 +323,7 @@ body {
 
 
 /* ========================================
-   地図の凡例
+   地図凡例
 ======================================== */
 
 .map-legend {
@@ -397,11 +391,8 @@ body {
 
   flex-shrink: 0;
 
-  border: 1px solid #9dadA7;
+  border: 1px solid #9dada7;
   border-radius: 4px;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 
@@ -481,7 +472,7 @@ body {
 
 
 /* ========================================
-   入力欄共通
+   入力欄
 ======================================== */
 
 .edit-field {
@@ -576,7 +567,7 @@ textarea.edit-field:disabled {
 
 
 /* ========================================
-   写真
+   写真エリア
 ======================================== */
 
 .photo-section {
@@ -602,6 +593,13 @@ textarea.edit-field:disabled {
 
 .photo-card {
   min-width: 0;
+
+  padding: 12px;
+
+  background: #fafcfb;
+
+  border: 1px solid #e0e8e4;
+  border-radius: 14px;
 }
 
 .photo-frame {
@@ -615,7 +613,7 @@ textarea.edit-field:disabled {
   background: #f1f5f3;
 
   border: 1px solid #dbe4e0;
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .photo-preview {
@@ -645,7 +643,7 @@ textarea.edit-field:disabled {
 }
 
 .photo-placeholder i {
-  color: #9dafA9;
+  color: #9dafa9;
 
   font-size: 30px;
 }
@@ -664,7 +662,7 @@ textarea.edit-field:disabled {
 
   width: 100%;
 
-  margin-top: 9px;
+  margin-top: 10px;
   padding: 9px 12px;
 
   color: #456d62;
@@ -688,11 +686,49 @@ textarea.edit-field:disabled {
   border-color: #a9c5bb;
 }
 
-
-/* 本物のファイル選択欄は隠す */
-
 .photo-file-input {
   display: none;
+}
+
+
+/* ========================================
+   写真削除ボタン
+======================================== */
+
+.photo-delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  width: 100%;
+
+  margin-top: 8px;
+  padding: 9px 12px;
+
+  color: #8b4a4a;
+  background: #fff7f7;
+
+  border: 1px solid #e6caca;
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.photo-delete-button:hover {
+  background: #fdeeee;
+  border-color: #d8aaaa;
+
+  transform: translateY(-1px);
 }
 
 
@@ -743,7 +779,9 @@ textarea.edit-field:disabled {
 
 #saveButton:disabled {
   opacity: 0.6;
+
   cursor: wait;
+
   transform: none;
 }
 
@@ -771,10 +809,7 @@ textarea.edit-field:disabled {
 @media (max-width: 800px) {
 
   .container {
-    width: min(
-      100% - 24px,
-      1100px
-    );
+    width: min(100% - 24px, 1100px);
 
     padding-top: 28px;
   }
@@ -787,7 +822,7 @@ textarea.edit-field:disabled {
   }
 
   #map {
-    height: 420px;
+    height: 330px;
   }
 
   .map-legend {
@@ -817,9 +852,7 @@ textarea.edit-field:disabled {
   .container {
     width: calc(100% - 20px);
 
-    padding:
-      22px 0
-      50px;
+    padding: 22px 0 50px;
   }
 
 
@@ -835,6 +868,7 @@ textarea.edit-field:disabled {
 
   .visited-profile {
     margin-top: 6px;
+
     font-size: 12px;
   }
 
@@ -863,7 +897,7 @@ textarea.edit-field:disabled {
   /* 地図 */
 
   #map {
-    height: 350px;
+    height: 280px;
 
     border-radius: 12px;
   }
@@ -917,7 +951,7 @@ textarea.edit-field:disabled {
   }
 
 
-  /* 訪問履歴 */
+  /* Visit */
 
   .date-grid {
     grid-template-columns: 1fr;
@@ -955,6 +989,17 @@ textarea.edit-field:disabled {
     gap: 15px;
   }
 
+  .photo-card {
+    padding: 10px;
+  }
+
+  .photo-select-button,
+  .photo-delete-button {
+    padding: 10px 12px;
+
+    font-size: 12px;
+  }
+
 
   /* ログイン後 */
 
@@ -977,7 +1022,7 @@ textarea.edit-field:disabled {
   }
 
   #map {
-    height: 310px;
+    height: 250px;
   }
 
   .legend-items {
