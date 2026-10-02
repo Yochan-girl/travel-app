@@ -36,60 +36,42 @@ let visitCounts = {};
 let currentPhotoUrl1 = null;
 let currentPhotoUrl2 = null;
 
+let isOwnerMode = false;
+
 
 // ========================================
 // HTML要素
 // ========================================
 
 const adminPanel =
-  document.getElementById(
-    'admin-panel'
-  );
+  document.getElementById('admin-panel');
 
 const loginArea =
-  document.getElementById(
-    'login-area'
-  );
+  document.getElementById('login-area');
 
 const loggedInArea =
-  document.getElementById(
-    'logged-in-area'
-  );
+  document.getElementById('logged-in-area');
 
 const saveButton =
-  document.getElementById(
-    'saveButton'
-  );
+  document.getElementById('saveButton');
 
 const viewOnlyMessage =
-  document.getElementById(
-    'view-only-message'
-  );
+  document.getElementById('view-only-message');
 
 const editFields =
-  document.querySelectorAll(
-    '.edit-field'
-  );
+  document.querySelectorAll('.edit-field');
 
 const photoInput1 =
-  document.getElementById(
-    'photoInput1'
-  );
+  document.getElementById('photoInput1');
 
 const photoInput2 =
-  document.getElementById(
-    'photoInput2'
-  );
+  document.getElementById('photoInput2');
 
 const deletePhoto1 =
-  document.getElementById(
-    'deletePhoto1'
-  );
+  document.getElementById('deletePhoto1');
 
 const deletePhoto2 =
-  document.getElementById(
-    'deletePhoto2'
-  );
+  document.getElementById('deletePhoto2');
 
 
 // ========================================
@@ -106,6 +88,70 @@ const isAdminPage =
 
 
 // ========================================
+// 削除ボタン表示制御
+// ========================================
+
+function updateDeleteButtons() {
+
+  if (deletePhoto1) {
+
+    if (
+      isOwnerMode &&
+      currentPhotoUrl1
+    ) {
+
+      deletePhoto1.classList.remove(
+        'hidden'
+      );
+
+      deletePhoto1.style.display =
+        'flex';
+
+    } else {
+
+      deletePhoto1.classList.add(
+        'hidden'
+      );
+
+      deletePhoto1.style.display =
+        'none';
+
+    }
+
+  }
+
+
+  if (deletePhoto2) {
+
+    if (
+      isOwnerMode &&
+      currentPhotoUrl2
+    ) {
+
+      deletePhoto2.classList.remove(
+        'hidden'
+      );
+
+      deletePhoto2.style.display =
+        'flex';
+
+    } else {
+
+      deletePhoto2.classList.add(
+        'hidden'
+      );
+
+      deletePhoto2.style.display =
+        'none';
+
+    }
+
+  }
+
+}
+
+
+// ========================================
 // 編集モード
 // ========================================
 
@@ -113,6 +159,11 @@ function setEditMode(
   isOwner
 ) {
 
+  isOwnerMode =
+    isOwner;
+
+
+  // 入力欄
   editFields.forEach(
     field => {
 
@@ -123,21 +174,13 @@ function setEditMode(
   );
 
 
+  // 写真選択ボタン
   document
     .querySelectorAll(
-      '.edit-only-photo'
+      '.photo-select-button'
     )
     .forEach(
       element => {
-
-        if (
-          element.classList.contains(
-            'photo-delete-button'
-          )
-        ) {
-
-          return;
-        }
 
         element.style.display =
           isOwner
@@ -148,161 +191,77 @@ function setEditMode(
     );
 
 
+  // ------------------------------
+  // 編集可能
+  // ------------------------------
+
   if (isOwner) {
 
-    adminPanel
-      .classList
-      .remove(
-        'hidden'
-      );
-
-    loginArea
-      .classList
-      .add(
-        'hidden'
-      );
-
-    loggedInArea
-      .classList
-      .remove(
-        'hidden'
-      );
-
-    saveButton
-      .classList
-      .remove(
-        'hidden'
-      );
-
-    viewOnlyMessage
-      .classList
-      .add(
-        'hidden'
-      );
-
-
-    updateDeleteButtons();
-
-    return;
-
-  }
-
-
-  loggedInArea
-    .classList
-    .add(
+    adminPanel.classList.remove(
       'hidden'
     );
 
-  saveButton
-    .classList
-    .add(
+    loginArea.classList.add(
       'hidden'
     );
 
-  viewOnlyMessage
-    .classList
-    .remove(
+    loggedInArea.classList.remove(
       'hidden'
     );
 
-
-  deletePhoto1
-    .classList
-    .add(
+    saveButton.classList.remove(
       'hidden'
     );
 
-  deletePhoto2
-    .classList
-    .add(
+    viewOnlyMessage.classList.add(
       'hidden'
     );
-
-
-  if (isAdminPage) {
-
-    adminPanel
-      .classList
-      .remove(
-        'hidden'
-      );
-
-    loginArea
-      .classList
-      .remove(
-        'hidden'
-      );
 
   } else {
 
-    adminPanel
-      .classList
-      .add(
+    // ------------------------------
+    // 編集不可
+    // ------------------------------
+
+    loggedInArea.classList.add(
+      'hidden'
+    );
+
+    saveButton.classList.add(
+      'hidden'
+    );
+
+    viewOnlyMessage.classList.remove(
+      'hidden'
+    );
+
+
+    if (isAdminPage) {
+
+      adminPanel.classList.remove(
         'hidden'
       );
 
-    loginArea
-      .classList
-      .add(
+      loginArea.classList.remove(
         'hidden'
       );
 
-  }
+    } else {
 
-}
-
-
-// ========================================
-// 削除ボタン表示制御
-// ========================================
-
-function updateDeleteButtons() {
-
-  if (
-    !deletePhoto1 ||
-    !deletePhoto2
-  ) {
-    return;
-  }
-
-
-  if (currentPhotoUrl1) {
-
-    deletePhoto1
-      .classList
-      .remove(
+      adminPanel.classList.add(
         'hidden'
       );
 
-  } else {
-
-    deletePhoto1
-      .classList
-      .add(
+      loginArea.classList.add(
         'hidden'
       );
+
+    }
 
   }
 
 
-  if (currentPhotoUrl2) {
-
-    deletePhoto2
-      .classList
-      .remove(
-        'hidden'
-      );
-
-  } else {
-
-    deletePhoto2
-      .classList
-      .add(
-        'hidden'
-      );
-
-  }
+  updateDeleteButtons();
 
 }
 
@@ -314,9 +273,7 @@ function updateDeleteButtons() {
 async function checkLogin() {
 
   const {
-    data: {
-      user
-    },
+    data: { user },
     error
   } =
     await supabaseClient
@@ -507,7 +464,7 @@ document
 
 
 // ========================================
-// 国名
+// 国名取得
 // ========================================
 
 function getCountryName(
@@ -525,7 +482,7 @@ function getCountryName(
 
 
 // ========================================
-// 国コード
+// 国コード取得
 // ========================================
 
 function getCountryCode(
@@ -554,7 +511,7 @@ function getCountryCode(
 
 
 // ========================================
-// 訪問回数取得
+// 訪問回数
 // ========================================
 
 function getVisitCount(
@@ -613,7 +570,7 @@ function getCountryColor(
 
 
 // ========================================
-// 国の通常スタイル
+// 国スタイル
 // ========================================
 
 function getCountryStyle(
@@ -737,7 +694,7 @@ async function loadCountryCount() {
 
 
 // ========================================
-// 訪問回数
+// 訪問回数読み込み
 // ========================================
 
 async function loadVisitCounts() {
@@ -847,15 +804,14 @@ function updateMapColors() {
           ];
 
 
-        item.layer
-          .setStyle(
+        item.layer.setStyle(
 
-            getCountryStyle(
-              item.countryCode,
-              item.countryName
-            )
+          getCountryStyle(
+            item.countryCode,
+            item.countryName
+          )
 
-          );
+        );
 
       }
     );
@@ -864,7 +820,7 @@ function updateMapColors() {
 
 
 // ========================================
-// Leaflet地図
+// Leaflet 地図
 // ========================================
 
 const map =
@@ -928,34 +884,26 @@ function showPhoto(
     preview.src =
       url;
 
-    preview
-      .classList
-      .remove(
-        'hidden'
-      );
+    preview.classList.remove(
+      'hidden'
+    );
 
-    placeholder
-      .classList
-      .add(
-        'hidden'
-      );
+    placeholder.classList.add(
+      'hidden'
+    );
 
   } else {
 
     preview.src =
       '';
 
-    preview
-      .classList
-      .add(
-        'hidden'
-      );
+    preview.classList.add(
+      'hidden'
+    );
 
-    placeholder
-      .classList
-      .remove(
-        'hidden'
-      );
+    placeholder.classList.remove(
+      'hidden'
+    );
 
   }
 
@@ -966,7 +914,7 @@ function showPhoto(
 
 
 // ========================================
-// 写真選択時プレビュー
+// 写真選択プレビュー
 // ========================================
 
 function setLocalPhotoPreview(
@@ -984,10 +932,9 @@ function setLocalPhotoPreview(
 
 
   if (
-    !file.type
-      .startsWith(
-        'image/'
-      )
+    !file.type.startsWith(
+      'image/'
+    )
   ) {
 
     alert(
@@ -998,6 +945,7 @@ function setLocalPhotoPreview(
       '';
 
     return;
+
   }
 
 
@@ -1015,10 +963,6 @@ function setLocalPhotoPreview(
 }
 
 
-// ========================================
-// Photo 1
-// ========================================
-
 photoInput1
   .addEventListener(
     'change',
@@ -1032,10 +976,6 @@ photoInput1
     }
   );
 
-
-// ========================================
-// Photo 2
-// ========================================
 
 photoInput2
   .addEventListener(
@@ -1289,6 +1229,9 @@ async function loadCountryData(
     currentPhotoUrl2
   );
 
+
+  updateDeleteButtons();
+
 }
 
 
@@ -1308,10 +1251,9 @@ async function uploadPhoto(
 
 
   if (
-    !file.type
-      .startsWith(
-        'image/'
-      )
+    !file.type.startsWith(
+      'image/'
+    )
   ) {
 
     throw new Error(
@@ -1423,8 +1365,6 @@ async function deleteStoredPhoto(
   number
 ) {
 
-  // 管理者本人確認
-
   const {
     data: {
       user
@@ -1493,8 +1433,6 @@ async function deleteStoredPhoto(
 
   try {
 
-    // URLの末尾から実際のファイル名を取得
-
     const cleanUrl =
       currentUrl
         .split('?')[0];
@@ -1531,28 +1469,21 @@ async function deleteStoredPhoto(
       storageError
     ) {
 
-      console.error(
-        'Storage削除エラー',
-        storageError
-      );
-
       throw storageError;
 
     }
 
 
     // -----------------------------
-    // travel-appからURL削除
+    // DBのURLをnullにする
     // -----------------------------
 
     const updateData =
       number === 1
-
         ? {
             photo_url_1:
               null
           }
-
         : {
             photo_url_2:
               null
@@ -1578,11 +1509,6 @@ async function deleteStoredPhoto(
     if (
       dbError
     ) {
-
-      console.error(
-        'DB更新エラー',
-        dbError
-      );
 
       throw dbError;
 
@@ -1620,6 +1546,9 @@ async function deleteStoredPhoto(
     );
 
 
+    updateDeleteButtons();
+
+
     alert(
       `写真${number}を削除しました`
     );
@@ -1649,37 +1578,41 @@ async function deleteStoredPhoto(
 
 
 // ========================================
-// 写真1削除
+// 削除ボタンイベント
 // ========================================
 
-deletePhoto1
-  .addEventListener(
-    'click',
-    async function () {
+if (deletePhoto1) {
 
-      await deleteStoredPhoto(
-        1
-      );
+  deletePhoto1
+    .addEventListener(
+      'click',
+      async function () {
 
-    }
-  );
+        await deleteStoredPhoto(
+          1
+        );
+
+      }
+    );
+
+}
 
 
-// ========================================
-// 写真2削除
-// ========================================
+if (deletePhoto2) {
 
-deletePhoto2
-  .addEventListener(
-    'click',
-    async function () {
+  deletePhoto2
+    .addEventListener(
+      'click',
+      async function () {
 
-      await deleteStoredPhoto(
-        2
-      );
+        await deleteStoredPhoto(
+          2
+        );
 
-    }
-  );
+      }
+    );
+
+}
 
 
 // ========================================
@@ -1833,7 +1766,7 @@ async function initializeMap() {
 
 
             // -----------------------------
-            // Click
+            // 国クリック
             // -----------------------------
 
             layer.on(
@@ -1848,9 +1781,10 @@ async function initializeMap() {
 
 
                 const nameElement =
-                  document.getElementById(
-                    'selected-country-name'
-                  );
+                  document
+                    .getElementById(
+                      'selected-country-name'
+                    );
 
 
                 if (
@@ -1905,8 +1839,6 @@ saveButton
   .addEventListener(
     'click',
     async function () {
-
-      // 管理者本人確認
 
       const {
         data: {
@@ -2169,6 +2101,9 @@ saveButton
 
         photoInput2.value =
           '';
+
+
+        updateDeleteButtons();
 
 
         await loadVisitCounts();
