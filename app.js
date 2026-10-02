@@ -1586,7 +1586,7 @@ async function initializeMap() {
 
     const response =
       await fetch(
-        'countries.geo.json'
+        'countries-japan-government-position.geo.json?v=20261002-1'
       );
 
 
@@ -1595,7 +1595,7 @@ async function initializeMap() {
     ) {
 
       throw new Error(
-        'countries.geo.jsonを読み込めませんでした'
+        'countries-japan-government-position.geo.json?v=20261002-1を読み込めませんでした'
       );
 
     }
