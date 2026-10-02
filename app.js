@@ -443,7 +443,7 @@ function getVisitCount(
 
 
 // ========================================
-// 地図カラー
+// 訪問回数による色
 // ========================================
 
 function getCountryColor(count) {
@@ -474,7 +474,7 @@ function getCountryColor(count) {
 
 
 // ========================================
-// 選択中の国か判定
+// 選択中の国か確認
 // ========================================
 
 function isSelectedCountry(
@@ -508,10 +508,16 @@ function isSelectedCountry(
 
 
 // ========================================
-// 国の通常スタイル
+// 国のスタイル
 //
-// 選択中の国だけ
-// 濃い緑の太線にする
+// 未選択
+// → 薄いグレー国境
+//
+// 訪問済み
+// → 中身だけ緑
+//
+// 選択中
+// → 太い濃緑国境
 // ========================================
 
 function getCountryStyle(
@@ -551,8 +557,8 @@ function getCountryStyle(
 
       fillOpacity:
         count > 0
-          ? 0.95
-          : 0.65
+          ? 0.92
+          : 0.5
 
     };
 
@@ -561,9 +567,9 @@ function getCountryStyle(
 
   return {
 
-    // 通常の国境は薄く
+    // 未選択は常に薄いグレー
     color:
-      '#91a39d',
+      '#9aa9a4',
 
     weight:
       0.8,
@@ -571,6 +577,7 @@ function getCountryStyle(
     opacity:
       0.8,
 
+    // 訪問済みなら中身だけ緑
     fillColor:
       getCountryColor(count),
 
@@ -749,7 +756,7 @@ async function loadVisitCounts() {
 
 
 // ========================================
-// 地図の線・色をすべて更新
+// 全国家の色更新
 // ========================================
 
 function updateMapColors() {
@@ -777,6 +784,17 @@ function updateMapColors() {
 
 
 // ========================================
+// 世界地図を1つだけ表示
+// ========================================
+
+const worldBounds =
+  L.latLngBounds(
+    L.latLng(-85, -180),
+    L.latLng(85, 180)
+  );
+
+
+// ========================================
 // Leaflet 地図
 // ========================================
 
@@ -784,7 +802,25 @@ const map =
   L.map(
     'map',
     {
-      zoomControl: true
+
+      zoomControl:
+        true,
+
+      // 縮小しすぎない
+      minZoom:
+        2,
+
+      // 世界の外へ移動させない
+      maxBounds:
+        worldBounds,
+
+      maxBoundsViscosity:
+        1.0,
+
+      // 横方向の繰り返し対策
+      worldCopyJump:
+        false
+
     }
   )
   .setView(
@@ -793,12 +829,23 @@ const map =
   );
 
 
+// ========================================
+// 背景地図
+// 世界を繰り返さない
+// ========================================
+
 L.tileLayer(
   'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
 
     maxZoom:
       19,
+
+    noWrap:
+      true,
+
+    bounds:
+      worldBounds,
 
     opacity:
       0.58,
@@ -1379,7 +1426,6 @@ async function deleteStoredPhoto(
       `${selectedCountryCode}/${fileName}`;
 
 
-    // Storageから削除
     const {
       error: storageError
     } =
@@ -1400,7 +1446,6 @@ async function deleteStoredPhoto(
     }
 
 
-    // DBのURLをnullにする
     const updateData =
       number === 1
         ? {
@@ -1495,7 +1540,7 @@ async function deleteStoredPhoto(
 
 
 // ========================================
-// 削除ボタン
+// 写真削除ボタン
 // ========================================
 
 if (deletePhoto1) {
@@ -1505,9 +1550,7 @@ if (deletePhoto1) {
       'click',
       async function () {
 
-        await deleteStoredPhoto(
-          1
-        );
+        await deleteStoredPhoto(1);
 
       }
     );
@@ -1522,9 +1565,7 @@ if (deletePhoto2) {
       'click',
       async function () {
 
-        await deleteStoredPhoto(
-          2
-        );
+        await deleteStoredPhoto(2);
 
       }
     );
@@ -1568,10 +1609,6 @@ async function initializeMap() {
       data,
       {
 
-        // -----------------------------
-        // 通常スタイル
-        // -----------------------------
-
         style:
           function (
             feature
@@ -1595,10 +1632,6 @@ async function initializeMap() {
 
           },
 
-
-        // -----------------------------
-        // 国ごとのイベント
-        // -----------------------------
 
         onEachFeature:
           function (
@@ -1631,56 +1664,21 @@ async function initializeMap() {
             // ==================================
             // Hover
             //
-            // 選択中以外だけ少し強調
+            // 見た目は一切変えない
             // ==================================
 
             layer.on(
               'mouseover',
               function () {
 
-                // 選択中なら
-                // 選択スタイルを維持
-                if (
-                  isSelectedCountry(
+                layer.setStyle(
+
+                  getCountryStyle(
                     countryCode,
                     countryName
                   )
-                ) {
 
-                  return;
-
-                }
-
-
-                const count =
-                  getVisitCount(
-                    countryCode,
-                    countryName
-                  );
-
-
-                layer.setStyle({
-
-                  color:
-                    '#58786f',
-
-                  weight:
-                    1.4,
-
-                  opacity:
-                    1,
-
-                  fillColor:
-                    getCountryColor(
-                      count
-                    ),
-
-                  fillOpacity:
-                    count > 0
-                      ? 0.95
-                      : 0.62
-
-                });
+                );
 
               }
             );
@@ -1715,7 +1713,6 @@ async function initializeMap() {
               'click',
               async function () {
 
-                // 選択国を更新
                 selectedCountryCode =
                   countryCode;
 
@@ -1723,8 +1720,8 @@ async function initializeMap() {
                   countryName;
 
 
-                // 一度すべての国の線を更新
-                // → 前に選択していた国の太線を戻す
+                // 前の選択国を元に戻し、
+                // 今の国だけ太枠にする
                 updateMapColors();
 
 
@@ -1750,8 +1747,6 @@ async function initializeMap() {
                 );
 
 
-                // データ読み込み後も
-                // 選択国の表示を再適用
                 updateMapColors();
 
               }
@@ -1765,6 +1760,13 @@ async function initializeMap() {
 
 
     updateMapColors();
+
+
+    // 世界の外側へ
+    // 地図がずれないよう再調整
+    map.setMaxBounds(
+      worldBounds
+    );
 
 
   } catch (
@@ -1884,103 +1886,72 @@ saveButton
 
           visit_date_1:
             document
-              .getElementById(
-                'visitDate1'
-              )
-              .value ||
-            null,
+              .getElementById('visitDate1')
+              .value || null,
 
           visit_city_1:
             document
-              .getElementById(
-                'visitCity1'
-              )
+              .getElementById('visitCity1')
               .value,
 
 
           visit_date_2:
             document
-              .getElementById(
-                'visitDate2'
-              )
-              .value ||
-            null,
+              .getElementById('visitDate2')
+              .value || null,
 
           visit_city_2:
             document
-              .getElementById(
-                'visitCity2'
-              )
+              .getElementById('visitCity2')
               .value,
 
 
           visit_date_3:
             document
-              .getElementById(
-                'visitDate3'
-              )
-              .value ||
-            null,
+              .getElementById('visitDate3')
+              .value || null,
 
           visit_city_3:
             document
-              .getElementById(
-                'visitCity3'
-              )
+              .getElementById('visitCity3')
               .value,
 
 
           visit_date_4:
             document
-              .getElementById(
-                'visitDate4'
-              )
-              .value ||
-            null,
+              .getElementById('visitDate4')
+              .value || null,
 
           visit_city_4:
             document
-              .getElementById(
-                'visitCity4'
-              )
+              .getElementById('visitCity4')
               .value,
 
 
           visit_date_5:
             document
-              .getElementById(
-                'visitDate5'
-              )
-              .value ||
-            null,
+              .getElementById('visitDate5')
+              .value || null,
 
           visit_city_5:
             document
-              .getElementById(
-                'visitCity5'
-              )
+              .getElementById('visitCity5')
               .value,
 
 
           food:
             document
-              .getElementById(
-                'food'
-              )
+              .getElementById('food')
               .value,
 
           memory:
             document
-              .getElementById(
-                'memory'
-              )
+              .getElementById('memory')
               .value,
 
           memo:
             document
-              .getElementById(
-                'memo'
-              )
+              .getElementById('memo')
               .value,
 
 
@@ -2050,7 +2021,6 @@ saveButton
         await loadCountryCount();
 
 
-        // 選択中の国の枠を維持
         updateMapColors();
 
 
