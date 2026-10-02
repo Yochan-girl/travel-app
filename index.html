@@ -47,28 +47,35 @@
   <div class="container">
 
 
-    <!-- =========================
+    <!-- ========================================
          タイトル
-    ========================== -->
+    ========================================= -->
 
     <header class="page-header">
 
-      <h1>Yochan Travel Map</h1>
+      <h1>
+        Yochan Travel Map
+      </h1>
 
       <p class="visited-profile">
+
         Visited
-        <span id="country-count">0</span>
+
+        <span id="country-count">
+          0
+        </span>
+
         Countries
+
       </p>
 
     </header>
 
 
 
-    <!-- =========================
+    <!-- ========================================
          管理者ログイン
-         通常URLでは最初から非表示
-    ========================== -->
+    ========================================= -->
 
     <section
       id="admin-panel"
@@ -95,6 +102,7 @@
           type="email"
           id="loginEmail"
           placeholder="Email"
+          autocomplete="email"
         >
 
 
@@ -102,10 +110,14 @@
           type="password"
           id="loginPassword"
           placeholder="Password"
+          autocomplete="current-password"
         >
 
 
-        <button id="loginButton">
+        <button
+          type="button"
+          id="loginButton"
+        >
 
           <i class="bi bi-box-arrow-in-right"></i>
 
@@ -114,7 +126,6 @@
         </button>
 
       </div>
-
 
 
       <!-- ログイン後 -->
@@ -135,8 +146,13 @@
           </span>
 
 
-          <button id="logoutButton">
+          <button
+            type="button"
+            id="logoutButton"
+          >
+
             Logout
+
           </button>
 
         </div>
@@ -147,9 +163,9 @@
 
 
 
-    <!-- =========================
+    <!-- ========================================
          世界地図
-    ========================== -->
+    ========================================= -->
 
     <section class="section-card">
 
@@ -162,73 +178,108 @@
       </h2>
 
 
-   <div id="map"></div>
-　　<div class="map-legend">
+      <div id="map"></div>
 
-  <span class="legend-title">
-    Visit Frequency
-  </span>
 
-  <div class="legend-items">
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#e8ecea;"
-      ></span>
-      未訪問
-    </div>
+      <!-- 地図凡例 -->
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#b8e3d5;"
-      ></span>
-      1回
-    </div>
+      <div class="map-legend">
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#7cc5ad;"
-      ></span>
-      2回
-    </div>
+        <span class="legend-title">
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#4a9b83;"
-      ></span>
-      3回
-    </div>
+          <i class="bi bi-palette"></i>
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#24705c;"
-      ></span>
-      4回
-    </div>
+          Visit Frequency
 
-    <div class="legend-item">
-      <span
-        class="legend-color"
-        style="background:#0f4f3f;"
-      ></span>
-      5回以上
-    </div>
+        </span>
 
-  </div>
 
-</div>
+        <div class="legend-items">
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#e8ecea;"
+            ></span>
+
+            未訪問
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#b8e3d5;"
+            ></span>
+
+            1回
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#7cc5ad;"
+            ></span>
+
+            2回
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#4a9b83;"
+            ></span>
+
+            3回
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#24705c;"
+            ></span>
+
+            4回
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span
+              class="legend-color"
+              style="background:#0f4f3f;"
+            ></span>
+
+            5回以上
+
+          </div>
+
+        </div>
+
+      </div>
+
     </section>
 
 
 
-    <!-- =========================
-         旅行の記録
-    ========================== -->
+    <!-- ========================================
+         Travel Memories
+    ========================================= -->
 
     <section class="section-card">
 
@@ -256,9 +307,9 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            Visit Date / City
-      ========================== -->
+      ========================================= -->
 
       <div class="date-grid">
 
@@ -470,9 +521,9 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            Food
-      ========================== -->
+      ========================================= -->
 
       <div class="text-field">
 
@@ -495,9 +546,9 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            Memory
-      ========================== -->
+      ========================================= -->
 
       <div class="text-field">
 
@@ -520,9 +571,9 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            Travel Photos
-      ========================== -->
+      ========================================= -->
 
       <div class="photo-section">
 
@@ -543,10 +594,11 @@
         <div class="photo-grid">
 
 
-          <!-- Photo 1 -->
+          <!-- =========================
+               Photo 1
+          ========================== -->
 
           <div class="photo-card">
-
 
             <div class="photo-frame">
 
@@ -573,6 +625,8 @@
             </div>
 
 
+            <!-- 編集者だけ表示 -->
+
             <label
               for="photoInput1"
               class="photo-select-button edit-only-photo"
@@ -592,14 +646,30 @@
               accept="image/*"
             >
 
+
+            <!-- 写真1削除 -->
+
+            <button
+              type="button"
+              id="deletePhoto1"
+              class="photo-delete-button edit-only-photo hidden"
+            >
+
+              <i class="bi bi-trash3"></i>
+
+              写真1を削除
+
+            </button>
+
           </div>
 
 
 
-          <!-- Photo 2 -->
+          <!-- =========================
+               Photo 2
+          ========================== -->
 
           <div class="photo-card">
-
 
             <div class="photo-frame">
 
@@ -626,6 +696,8 @@
             </div>
 
 
+            <!-- 編集者だけ表示 -->
+
             <label
               for="photoInput2"
               class="photo-select-button edit-only-photo"
@@ -645,6 +717,21 @@
               accept="image/*"
             >
 
+
+            <!-- 写真2削除 -->
+
+            <button
+              type="button"
+              id="deletePhoto2"
+              class="photo-delete-button edit-only-photo hidden"
+            >
+
+              <i class="bi bi-trash3"></i>
+
+              写真2を削除
+
+            </button>
+
           </div>
 
 
@@ -654,9 +741,9 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            Memo
-      ========================== -->
+      ========================================= -->
 
       <div class="text-field">
 
@@ -679,11 +766,12 @@
 
 
 
-      <!-- =========================
+      <!-- ========================================
            保存
-      ========================== -->
+      ========================================= -->
 
       <button
+        type="button"
         id="saveButton"
         class="hidden"
       >
@@ -702,7 +790,9 @@
         id="view-only-message"
         class="view-only-message"
       >
+
         閲覧モード
+
       </p>
 
 
@@ -713,21 +803,13 @@
 
 
 
-  <!-- =========================
-       Supabase
-  ========================== -->
-
+  <!-- Supabase -->
   <script
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
   </script>
 
 
-
-  <!-- =========================
-       自分のJavaScript
-       必ず一番最後
-  ========================== -->
-
+  <!-- 自分のJavaScript -->
   <script src="app.js"></script>
 
 
