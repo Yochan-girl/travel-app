@@ -100,21 +100,13 @@ function updateDeleteButtons() {
       currentPhotoUrl1
     ) {
 
-      deletePhoto1.classList.remove(
-        'hidden'
-      );
-
-      deletePhoto1.style.display =
-        'flex';
+      deletePhoto1.classList.remove('hidden');
+      deletePhoto1.style.display = 'flex';
 
     } else {
 
-      deletePhoto1.classList.add(
-        'hidden'
-      );
-
-      deletePhoto1.style.display =
-        'none';
+      deletePhoto1.classList.add('hidden');
+      deletePhoto1.style.display = 'none';
 
     }
 
@@ -128,21 +120,13 @@ function updateDeleteButtons() {
       currentPhotoUrl2
     ) {
 
-      deletePhoto2.classList.remove(
-        'hidden'
-      );
-
-      deletePhoto2.style.display =
-        'flex';
+      deletePhoto2.classList.remove('hidden');
+      deletePhoto2.style.display = 'flex';
 
     } else {
 
-      deletePhoto2.classList.add(
-        'hidden'
-      );
-
-      deletePhoto2.style.display =
-        'none';
+      deletePhoto2.classList.add('hidden');
+      deletePhoto2.style.display = 'none';
 
     }
 
@@ -155,106 +139,58 @@ function updateDeleteButtons() {
 // 編集モード
 // ========================================
 
-function setEditMode(
-  isOwner
-) {
+function setEditMode(isOwner) {
 
-  isOwnerMode =
-    isOwner;
+  isOwnerMode = isOwner;
 
 
-  // 入力欄
-  editFields.forEach(
-    field => {
-
-      field.disabled =
-        !isOwner;
-
-    }
-  );
+  editFields.forEach(field => {
+    field.disabled = !isOwner;
+  });
 
 
-  // 写真選択ボタン
   document
-    .querySelectorAll(
-      '.photo-select-button'
-    )
-    .forEach(
-      element => {
+    .querySelectorAll('.photo-select-button')
+    .forEach(element => {
 
-        element.style.display =
-          isOwner
-            ? 'flex'
-            : 'none';
+      element.style.display =
+        isOwner
+          ? 'flex'
+          : 'none';
 
-      }
-    );
+    });
 
-
-  // ------------------------------
-  // 編集可能
-  // ------------------------------
 
   if (isOwner) {
 
-    adminPanel.classList.remove(
-      'hidden'
-    );
+    adminPanel.classList.remove('hidden');
 
-    loginArea.classList.add(
-      'hidden'
-    );
+    loginArea.classList.add('hidden');
 
-    loggedInArea.classList.remove(
-      'hidden'
-    );
+    loggedInArea.classList.remove('hidden');
 
-    saveButton.classList.remove(
-      'hidden'
-    );
+    saveButton.classList.remove('hidden');
 
-    viewOnlyMessage.classList.add(
-      'hidden'
-    );
+    viewOnlyMessage.classList.add('hidden');
 
   } else {
 
-    // ------------------------------
-    // 編集不可
-    // ------------------------------
+    loggedInArea.classList.add('hidden');
 
-    loggedInArea.classList.add(
-      'hidden'
-    );
+    saveButton.classList.add('hidden');
 
-    saveButton.classList.add(
-      'hidden'
-    );
-
-    viewOnlyMessage.classList.remove(
-      'hidden'
-    );
+    viewOnlyMessage.classList.remove('hidden');
 
 
     if (isAdminPage) {
 
-      adminPanel.classList.remove(
-        'hidden'
-      );
-
-      loginArea.classList.remove(
-        'hidden'
-      );
+      adminPanel.classList.remove('hidden');
+      loginArea.classList.remove('hidden');
 
     } else {
 
-      adminPanel.classList.add(
-        'hidden'
-      );
-
-      loginArea.classList.add(
-        'hidden'
-      );
+      adminPanel.classList.add('hidden');
+      loginArea.classList.add('hidden');
 
     }
 
@@ -286,10 +222,7 @@ async function checkLogin() {
     !user
   ) {
 
-    setEditMode(
-      false
-    );
-
+    setEditMode(false);
     return;
 
   }
@@ -300,9 +233,7 @@ async function checkLogin() {
     user.id === ADMIN_USER_ID;
 
 
-  setEditMode(
-    isOwner
-  );
+  setEditMode(isOwner);
 
 }
 
@@ -312,26 +243,20 @@ async function checkLogin() {
 // ========================================
 
 document
-  .getElementById(
-    'loginButton'
-  )
+  .getElementById('loginButton')
   .addEventListener(
     'click',
     async function () {
 
       const email =
         document
-          .getElementById(
-            'loginEmail'
-          )
+          .getElementById('loginEmail')
           .value
           .trim();
 
       const password =
         document
-          .getElementById(
-            'loginPassword'
-          )
+          .getElementById('loginPassword')
           .value;
 
 
@@ -380,17 +305,14 @@ document
 
       if (
         !data.user ||
-        data.user.id !==
-          ADMIN_USER_ID
+        data.user.id !== ADMIN_USER_ID
       ) {
 
         await supabaseClient
           .auth
           .signOut();
 
-        setEditMode(
-          false
-        );
+        setEditMode(false);
 
         alert(
           'このアカウントには編集権限がありません'
@@ -401,9 +323,7 @@ document
       }
 
 
-      setEditMode(
-        true
-      );
+      setEditMode(true);
 
       alert(
         'ログインしました'
@@ -418,9 +338,7 @@ document
 // ========================================
 
 document
-  .getElementById(
-    'logoutButton'
-  )
+  .getElementById('logoutButton')
   .addEventListener(
     'click',
     async function () {
@@ -451,9 +369,7 @@ document
       }
 
 
-      setEditMode(
-        false
-      );
+      setEditMode(false);
 
       alert(
         'ログアウトしました'
@@ -467,9 +383,7 @@ document
 // 国名取得
 // ========================================
 
-function getCountryName(
-  feature
-) {
+function getCountryName(feature) {
 
   return (
     feature.properties.name ||
@@ -485,9 +399,7 @@ function getCountryName(
 // 国コード取得
 // ========================================
 
-function getCountryCode(
-  feature
-) {
+function getCountryCode(feature) {
 
   return (
 
@@ -501,9 +413,7 @@ function getCountryCode(
 
     feature.properties.ISO3166_1_Alpha_2 ||
 
-    getCountryName(
-      feature
-    )
+    getCountryName(feature)
 
   );
 
@@ -511,7 +421,7 @@ function getCountryCode(
 
 
 // ========================================
-// 訪問回数
+// 訪問回数取得
 // ========================================
 
 function getVisitCount(
@@ -521,13 +431,9 @@ function getVisitCount(
 
   return (
 
-    visitCounts[
-      countryCode
-    ] ??
+    visitCounts[countryCode] ??
 
-    visitCounts[
-      countryName
-    ] ??
+    visitCounts[countryName] ??
 
     0
 
@@ -540,9 +446,7 @@ function getVisitCount(
 // 地図カラー
 // ========================================
 
-function getCountryColor(
-  count
-) {
+function getCountryColor(count) {
 
   if (count >= 5) {
     return '#0f4f3f';
@@ -570,7 +474,44 @@ function getCountryColor(
 
 
 // ========================================
-// 国スタイル
+// 選択中の国か判定
+// ========================================
+
+function isSelectedCountry(
+  countryCode,
+  countryName
+) {
+
+  if (
+    selectedCountryCode &&
+    countryCode === selectedCountryCode
+  ) {
+
+    return true;
+
+  }
+
+
+  if (
+    selectedCountryName &&
+    countryName === selectedCountryName
+  ) {
+
+    return true;
+
+  }
+
+
+  return false;
+
+}
+
+
+// ========================================
+// 国の通常スタイル
+//
+// 選択中の国だけ
+// 濃い緑の太線にする
 // ========================================
 
 function getCountryStyle(
@@ -585,26 +526,58 @@ function getCountryStyle(
     );
 
 
+  const selected =
+    isSelectedCountry(
+      countryCode,
+      countryName
+    );
+
+
+  if (selected) {
+
+    return {
+
+      color:
+        '#174f43',
+
+      weight:
+        3,
+
+      opacity:
+        1,
+
+      fillColor:
+        getCountryColor(count),
+
+      fillOpacity:
+        count > 0
+          ? 0.95
+          : 0.65
+
+    };
+
+  }
+
+
   return {
 
+    // 通常の国境は薄く
     color:
-      '#71857e',
+      '#91a39d',
 
     weight:
-      1.2,
+      0.8,
 
     opacity:
-      0.9,
+      0.8,
 
     fillColor:
-      getCountryColor(
-        count
-      ),
+      getCountryColor(count),
 
     fillOpacity:
       count > 0
-        ? 0.92
-        : 0.58
+        ? 0.9
+        : 0.5
 
   };
 
@@ -622,9 +595,7 @@ async function loadCountryCount() {
     error
   } =
     await supabaseClient
-      .from(
-        'travel-app'
-      )
+      .from('travel-app')
       .select(`
         country_code,
         visit_date_1,
@@ -651,30 +622,28 @@ async function loadCountryCount() {
     new Set();
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      const hasVisit =
-        record.visit_date_1 ||
-        record.visit_date_2 ||
-        record.visit_date_3 ||
-        record.visit_date_4 ||
-        record.visit_date_5;
+    const hasVisit =
+      record.visit_date_1 ||
+      record.visit_date_2 ||
+      record.visit_date_3 ||
+      record.visit_date_4 ||
+      record.visit_date_5;
 
 
-      if (
-        record.country_code &&
-        hasVisit
-      ) {
+    if (
+      record.country_code &&
+      hasVisit
+    ) {
 
-        countries.add(
-          record.country_code
-        );
-
-      }
+      countries.add(
+        record.country_code
+      );
 
     }
-  );
+
+  });
 
 
   const element =
@@ -704,9 +673,7 @@ async function loadVisitCounts() {
     error
   } =
     await supabaseClient
-      .from(
-        'travel-app'
-      )
+      .from('travel-app')
       .select(`
         country_code,
         country_name,
@@ -733,51 +700,47 @@ async function loadVisitCounts() {
   visitCounts = {};
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      const dates = [
+    const dates = [
 
-        record.visit_date_1,
-        record.visit_date_2,
-        record.visit_date_3,
-        record.visit_date_4,
-        record.visit_date_5
+      record.visit_date_1,
+      record.visit_date_2,
+      record.visit_date_3,
+      record.visit_date_4,
+      record.visit_date_5
 
-      ];
-
-
-      const count =
-        dates
-          .filter(
-            date => date
-          )
-          .length;
+    ];
 
 
-      if (
+    const count =
+      dates
+        .filter(date => date)
+        .length;
+
+
+    if (
+      record.country_code
+    ) {
+
+      visitCounts[
         record.country_code
-      ) {
-
-        visitCounts[
-          record.country_code
-        ] = count;
-
-      }
-
-
-      if (
-        record.country_name
-      ) {
-
-        visitCounts[
-          record.country_name
-        ] = count;
-
-      }
+      ] = count;
 
     }
-  );
+
+
+    if (
+      record.country_name
+    ) {
+
+      visitCounts[
+        record.country_name
+      ] = count;
+
+    }
+
+  });
 
 
   updateMapColors();
@@ -786,35 +749,29 @@ async function loadVisitCounts() {
 
 
 // ========================================
-// 地図色更新
+// 地図の線・色をすべて更新
 // ========================================
 
 function updateMapColors() {
 
   Object
-    .keys(
-      countryLayers
-    )
-    .forEach(
-      key => {
+    .keys(countryLayers)
+    .forEach(key => {
 
-        const item =
-          countryLayers[
-            key
-          ];
+      const item =
+        countryLayers[key];
 
 
-        item.layer.setStyle(
+      item.layer.setStyle(
 
-          getCountryStyle(
-            item.countryCode,
-            item.countryName
-          )
+        getCountryStyle(
+          item.countryCode,
+          item.countryName
+        )
 
-        );
+      );
 
-      }
-    );
+    });
 
 }
 
@@ -827,8 +784,7 @@ const map =
   L.map(
     'map',
     {
-      zoomControl:
-        true
+      zoomControl: true
     }
   )
   .setView(
@@ -851,9 +807,7 @@ L.tileLayer(
       '&copy; OpenStreetMap'
 
   }
-).addTo(
-  map
-);
+).addTo(map);
 
 
 // ========================================
@@ -1020,23 +974,17 @@ function clearForm() {
 
 
   document
-    .getElementById(
-      'food'
-    )
+    .getElementById('food')
     .value = '';
 
 
   document
-    .getElementById(
-      'memory'
-    )
+    .getElementById('memory')
     .value = '';
 
 
   document
-    .getElementById(
-      'memo'
-    )
+    .getElementById('memo')
     .value = '';
 
 
@@ -1084,9 +1032,7 @@ async function loadCountryData(
     error
   } =
     await supabaseClient
-      .from(
-        'travel-app'
-      )
+      .from('travel-app')
       .select('*')
       .eq(
         'country_code',
@@ -1111,9 +1057,7 @@ async function loadCountryData(
 
     const result =
       await supabaseClient
-        .from(
-          'travel-app'
-        )
+        .from('travel-app')
         .select('*')
         .eq(
           'country_name',
@@ -1186,25 +1130,19 @@ async function loadCountryData(
 
 
   document
-    .getElementById(
-      'food'
-    )
+    .getElementById('food')
     .value =
       data.food || '';
 
 
   document
-    .getElementById(
-      'memory'
-    )
+    .getElementById('memory')
     .value =
       data.memory || '';
 
 
   document
-    .getElementById(
-      'memo'
-    )
+    .getElementById('memo')
     .value =
       data.memo || '';
 
@@ -1290,9 +1228,7 @@ async function uploadPhoto(
   } =
     await supabaseClient
       .storage
-      .from(
-        'travel-photos'
-      )
+      .from('travel-photos')
       .upload(
         filePath,
         file,
@@ -1328,9 +1264,7 @@ async function uploadPhoto(
   } =
     supabaseClient
       .storage
-      .from(
-        'travel-photos'
-      )
+      .from('travel-photos')
       .getPublicUrl(
         filePath
       );
@@ -1366,9 +1300,7 @@ async function deleteStoredPhoto(
 ) {
 
   const {
-    data: {
-      user
-    }
+    data: { user }
   } =
     await supabaseClient
       .auth
@@ -1377,8 +1309,7 @@ async function deleteStoredPhoto(
 
   if (
     !user ||
-    user.id !==
-      ADMIN_USER_ID
+    user.id !== ADMIN_USER_ID
   ) {
 
     alert(
@@ -1448,18 +1379,13 @@ async function deleteStoredPhoto(
       `${selectedCountryCode}/${fileName}`;
 
 
-    // -----------------------------
     // Storageから削除
-    // -----------------------------
-
     const {
       error: storageError
     } =
       await supabaseClient
         .storage
-        .from(
-          'travel-photos'
-        )
+        .from('travel-photos')
         .remove([
           filePath
         ]);
@@ -1474,10 +1400,7 @@ async function deleteStoredPhoto(
     }
 
 
-    // -----------------------------
     // DBのURLをnullにする
-    // -----------------------------
-
     const updateData =
       number === 1
         ? {
@@ -1494,9 +1417,7 @@ async function deleteStoredPhoto(
       error: dbError
     } =
       await supabaseClient
-        .from(
-          'travel-app'
-        )
+        .from('travel-app')
         .update(
           updateData
         )
@@ -1514,10 +1435,6 @@ async function deleteStoredPhoto(
 
     }
 
-
-    // -----------------------------
-    // 画面更新
-    // -----------------------------
 
     if (
       number === 1
@@ -1578,7 +1495,7 @@ async function deleteStoredPhoto(
 
 
 // ========================================
-// 削除ボタンイベント
+// 削除ボタン
 // ========================================
 
 if (deletePhoto1) {
@@ -1651,6 +1568,10 @@ async function initializeMap() {
       data,
       {
 
+        // -----------------------------
+        // 通常スタイル
+        // -----------------------------
+
         style:
           function (
             feature
@@ -1674,6 +1595,10 @@ async function initializeMap() {
 
           },
 
+
+        // -----------------------------
+        // 国ごとのイベント
+        // -----------------------------
 
         onEachFeature:
           function (
@@ -1703,50 +1628,67 @@ async function initializeMap() {
             };
 
 
-            // -----------------------------
+            // ==================================
             // Hover
-            // -----------------------------
+            //
+            // 選択中以外だけ少し強調
+            // ==================================
 
             layer.on(
               'mouseover',
               function () {
 
+                // 選択中なら
+                // 選択スタイルを維持
+                if (
+                  isSelectedCountry(
+                    countryCode,
+                    countryName
+                  )
+                ) {
+
+                  return;
+
+                }
+
+
+                const count =
+                  getVisitCount(
+                    countryCode,
+                    countryName
+                  );
+
+
                 layer.setStyle({
 
                   color:
-                    '#174f43',
+                    '#58786f',
 
                   weight:
-                    2.4,
+                    1.4,
 
                   opacity:
                     1,
 
                   fillColor:
                     getCountryColor(
-                      getVisitCount(
-                        countryCode,
-                        countryName
-                      )
+                      count
                     ),
 
                   fillOpacity:
-                    0.98
+                    count > 0
+                      ? 0.95
+                      : 0.62
 
                 });
-
-
-                if (
-                  layer.bringToFront
-                ) {
-
-                  layer.bringToFront();
-
-                }
 
               }
             );
 
+
+            // ==================================
+            // Hover解除
+            // ==================================
 
             layer.on(
               'mouseout',
@@ -1765,14 +1707,15 @@ async function initializeMap() {
             );
 
 
-            // -----------------------------
+            // ==================================
             // 国クリック
-            // -----------------------------
+            // ==================================
 
             layer.on(
               'click',
               async function () {
 
+                // 選択国を更新
                 selectedCountryCode =
                   countryCode;
 
@@ -1780,11 +1723,15 @@ async function initializeMap() {
                   countryName;
 
 
+                // 一度すべての国の線を更新
+                // → 前に選択していた国の太線を戻す
+                updateMapColors();
+
+
                 const nameElement =
-                  document
-                    .getElementById(
-                      'selected-country-name'
-                    );
+                  document.getElementById(
+                    'selected-country-name'
+                  );
 
 
                 if (
@@ -1802,6 +1749,11 @@ async function initializeMap() {
                   countryName
                 );
 
+
+                // データ読み込み後も
+                // 選択国の表示を再適用
+                updateMapColors();
+
               }
             );
 
@@ -1809,9 +1761,7 @@ async function initializeMap() {
 
       }
 
-    ).addTo(
-      map
-    );
+    ).addTo(map);
 
 
     updateMapColors();
@@ -1841,9 +1791,7 @@ saveButton
     async function () {
 
       const {
-        data: {
-          user
-        }
+        data: { user }
       } =
         await supabaseClient
           .auth
@@ -1852,8 +1800,7 @@ saveButton
 
       if (
         !user ||
-        user.id !==
-          ADMIN_USER_ID
+        user.id !== ADMIN_USER_ID
       ) {
 
         alert(
@@ -1896,17 +1843,13 @@ saveButton
 
 
         const file1 =
-          photoInput1
-            .files[0];
+          photoInput1.files[0];
 
         const file2 =
-          photoInput2
-            .files[0];
+          photoInput2.files[0];
 
 
-        if (
-          file1
-        ) {
+        if (file1) {
 
           photoUrl1 =
             await uploadPhoto(
@@ -1918,9 +1861,7 @@ saveButton
         }
 
 
-        if (
-          file2
-        ) {
+        if (file2) {
 
           photoUrl2 =
             await uploadPhoto(
@@ -2056,9 +1997,7 @@ saveButton
           error
         } =
           await supabaseClient
-            .from(
-              'travel-app'
-            )
+            .from('travel-app')
             .upsert(
               record,
               {
@@ -2109,6 +2048,10 @@ saveButton
         await loadVisitCounts();
 
         await loadCountryCount();
+
+
+        // 選択中の国の枠を維持
+        updateMapColors();
 
 
         alert(
