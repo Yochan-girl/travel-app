@@ -1799,7 +1799,7 @@ async function initializeMap() {
 
     const response =
       await fetch(
-        'countries-japan-government-position.geo.json?v=20261002-3',
+        'countries-japan-corrected.geo.json?v=20261002-4',
         {
           cache:
             'no-store'
