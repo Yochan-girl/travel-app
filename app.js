@@ -2003,7 +2003,7 @@ async function initializeMap() {
     // 世界全体を1つだけ表示
     // ====================================
 
-   // 地図が枠を埋める大きさを、縮小の限界にする
+    // 地図が枠を埋める大きさを、縮小の限界にする
     const geoBounds = geoJsonLayer.getBounds();
 
     const displayBounds = geoBounds.isValid()
@@ -2019,12 +2019,7 @@ async function initializeMap() {
         !Number.isFinite(previousZoom) ||
         previousZoom <= previousMinZoom + 0.01;
 
-      map.invalidateSize({
-        animate: false,
-        pan: false
-      });
-
-      // 地図全体を収めるのではなく、枠を埋める倍率
+      // 地図が枠を埋める倍率を計算する
       const minimumZoom = map.getBoundsZoom(
         displayBounds,
         true,
@@ -2052,6 +2047,7 @@ async function initializeMap() {
 
     // PCの画面幅変更やスマホの縦横切り替えにも対応
     map.on('resize', adjustMapSize);
+
 
     updateMapColors();
 
