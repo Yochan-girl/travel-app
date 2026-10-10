@@ -951,7 +951,7 @@ const map =
         false,
 
       zoomSnap:
-        0.25,
+        0,
 
       zoomDelta:
         0.5
@@ -2003,49 +2003,55 @@ async function initializeMap() {
     // 世界全体を1つだけ表示
     // ====================================
 
-    const geoBounds =
-      geoJsonLayer.getBounds();
+   // 地図が枠を埋める大きさを、縮小の限界にする
+    const geoBounds = geoJsonLayer.getBounds();
 
+    const displayBounds = geoBounds.isValid()
+      ? geoBounds
+      : worldBounds;
 
-    if (
-      geoBounds.isValid()
-    ) {
+    function adjustMapSize() {
+      const previousZoom = map.getZoom();
+      const previousMinZoom = map.getMinZoom();
 
-      map.fitBounds(
-        geoBounds,
-        {
-          padding:
-            [8, 8],
+      // 最も縮小した状態かどうか
+      const isFullyZoomedOut =
+        !Number.isFinite(previousZoom) ||
+        previousZoom <= previousMinZoom + 0.01;
 
-          animate:
-            false
-        }
+      map.invalidateSize({
+        animate: false,
+        pan: false
+      });
+
+      // 地図全体を収めるのではなく、枠を埋める倍率
+      const minimumZoom = map.getBoundsZoom(
+        displayBounds,
+        true,
+        [0, 0]
       );
 
+      map.setMinZoom(minimumZoom);
 
-      // 現在の世界表示ズームを
-      // 最小ズームにする
-      const initialZoom =
-        map.getZoom();
-
-
-      map.setMinZoom(
-        initialZoom
-      );
-
-    } else {
-
-      map.fitBounds(
-        worldBounds
-      );
-
+      if (isFullyZoomedOut) {
+        map.setView(
+          displayBounds.getCenter(),
+          minimumZoom,
+          { animate: false }
+        );
+      } else if (map.getZoom() < minimumZoom) {
+        map.setZoom(minimumZoom, {
+          animate: false
+        });
+      }
     }
 
+    map.setMaxBounds(worldBounds);
 
-    map.setMaxBounds(
-      worldBounds
-    );
+    adjustMapSize();
 
+    // PCの画面幅変更やスマホの縦横切り替えにも対応
+    map.on('resize', adjustMapSize);
 
     updateMapColors();
 
